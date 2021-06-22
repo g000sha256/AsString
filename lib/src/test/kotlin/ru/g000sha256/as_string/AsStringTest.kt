@@ -6,49 +6,39 @@ import org.junit.Test
 class AsStringTest {
 
     @Test
-    fun `check fields with annotation`() {
-        val click = UiAction.Click()
+    fun test() {
+        // GIVEN
+        val uiAction = UiAction.Click()
 
-        val actualString = click.toString()
+        // WHEN
+        val actualString = uiAction.toString()
 
-        val expectedString = "UiAction.Click(baseField: baseField, nonNullField: nonNullField, nullableField: null, privateField: privateField)"
-        Assert.assertEquals(expectedString, actualString)
-    }
-
-    @Test
-    fun `check fields without annotation`() {
-        val show = UiAction.Show()
-
-        val actualString = show.toString()
-
-        val expectedString = "UiAction.Show(baseField: baseField, customStringObject: NonStringObject.toString, nonStringObject: ru.g000sha256.as_string.NonStringObject@1)"
+        // THEN
+        val expectedString = "UiAction.Click(" +
+                "baseField: baseField, " +
+                "nonNullField: nonNullField, " +
+                "nullableField: null, " +
+                "privateField: privateField, " +
+                "customStringObject: custom string, " +
+                "nonStringObject: ru.g000sha256.as_string.NonStringObject@1" +
+                ")"
         Assert.assertEquals(expectedString, actualString)
     }
 
 }
 
-abstract class BaseAction {
-
-    override fun toString(): String {
-        return asString ?: super.toString()
-    }
-
-}
-
-@AsString
 sealed class UiAction(
     val baseField: String = "baseField"
-) : BaseAction() {
+) {
 
-    @AsString
+    override fun toString(): String {
+        return asString
+    }
+
     class Click(
         val nonNullField: String = "nonNullField",
         val nullableField: String? = null,
-        private val privateField: String = "privateField"
-    ) : UiAction()
-
-    @AsString
-    class Show(
+        private val privateField: String = "privateField",
         val customStringObject: CustomStringObject = CustomStringObject(),
         val nonStringObject: NonStringObject = NonStringObject()
     ) : UiAction()
@@ -58,12 +48,16 @@ sealed class UiAction(
 class CustomStringObject {
 
     override fun toString(): String {
-        return "NonStringObject.toString"
+        return "custom string"
     }
 
 }
 
 class NonStringObject {
+
+    override fun equals(other: Any?): Boolean {
+        return this === other && javaClass == other.javaClass
+    }
 
     override fun hashCode(): Int {
         return 1
