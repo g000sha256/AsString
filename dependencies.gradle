@@ -15,7 +15,6 @@ ext {
             slf4j   : "org.slf4j:slf4j-api:1.7.30"
     ]
     plugin = [
-            cobertura: "net.saliman:gradle-cobertura-plugin:4.0.0",
-            kotlin   : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versionKotlin"
+            kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versionKotlin"
     ]
 }

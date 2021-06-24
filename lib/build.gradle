@@ -1,13 +1,10 @@
 apply plugin: "kotlin"
 apply plugin: "maven"
-apply plugin: "net.saliman.cobertura"
+apply from: "$rootDir/coverage.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-cobertura {
-    coverageFormats = ["html", "xml"]
-}
 dependencies {
     implementation(lib.jetBrains.annotations) { transitive = false }
     implementation(lib.jetBrains.kotlin.stdLib) { transitive = false }
@@ -20,7 +17,4 @@ dependencies {
 }
 repositories {
     mavenCentral()
-}
-test {
-    finalizedBy(project.tasks.cobertura)
 }

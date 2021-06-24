@@ -1,7 +1,6 @@
 buildscript {
     apply from: "dependencies.gradle"
     dependencies {
-        classpath plugin.cobertura
         classpath plugin.kotlin
     }
     repositories {

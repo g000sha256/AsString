@@ -8,13 +8,13 @@ class AsStringTest {
     @Test
     fun test() {
         // GIVEN
-        val uiAction = UiAction.Click()
+        val action = Action.Click()
 
         // WHEN
-        val actualString = uiAction.toString()
+        val actualString = action.toString()
 
         // THEN
-        val expectedString = "UiAction.Click(" +
+        val expectedString = "Action.Click(" +
                 "baseField: baseField, " +
                 "nonNullField: nonNullField, " +
                 "nullableField: null, " +
@@ -27,7 +27,7 @@ class AsStringTest {
 
 }
 
-sealed class UiAction(
+sealed class Action(
     val baseField: String = "baseField"
 ) {
 
@@ -41,11 +41,13 @@ sealed class UiAction(
         private val privateField: String = "privateField",
         val customStringObject: CustomStringObject = CustomStringObject(),
         val nonStringObject: NonStringObject = NonStringObject()
-    ) : UiAction()
+    ) : Action()
 
 }
 
-class CustomStringObject {
+class CustomStringObject(
+    val field: String = "field"
+) {
 
     override fun toString(): String {
         return "custom string"
@@ -53,7 +55,9 @@ class CustomStringObject {
 
 }
 
-class NonStringObject {
+class NonStringObject(
+    val field: String = "field"
+) {
 
     override fun equals(other: Any?): Boolean {
         return this === other && javaClass == other.javaClass
